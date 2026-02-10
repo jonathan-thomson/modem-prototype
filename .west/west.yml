@@ -14,8 +14,6 @@ manifest:
       remote: zephyrproject
       revision: v4.2.0
       path: thirdparty/zephyrproject/zephyr
-      import:
-        path-prefix: thirdparty/zephyrproject
 
   self:
     path: .west
