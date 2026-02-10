@@ -53,3 +53,20 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# west workspace state
+.west/**
+!.west/config
+!.west/west.yml
+
+# Zephyr / build outputs
+control/build/**
+control/test-catch2/build/**
+
+# thirdparty sources pulled by west
+thirdparty/**
+!thirdparty/zephyrproject/
+!thirdparty/zephyrproject/.gitkeep
+
+# node / misc
+node_modules/**
