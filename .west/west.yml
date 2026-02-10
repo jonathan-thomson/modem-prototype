@@ -12,7 +12,7 @@ manifest:
     # Zephyr RTOS sources. west will clone this into thirdparty/zephyrproject/zephyr
     - name: zephyr
       remote: zephyrproject
-      revision: main
+      revision: v4.2.0
       path: thirdparty/zephyrproject/zephyr
       import:
         path-prefix: thirdparty/zephyrproject
