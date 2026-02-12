@@ -1,0 +1,9 @@
+board:
+  name: control
+  vendor: jt
+  revision:
+    format: custom
+    revisions:
+      - name: a4
+  socs:
+    - name: mimxrt1052

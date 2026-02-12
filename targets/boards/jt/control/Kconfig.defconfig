@@ -1,0 +1,23 @@
+# Copyright (c) 2017, NXP
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_MIMXRT1050_CONTROL || BOARD_REVISION_A4
+
+config BOARD
+    default "mimxrt1050_jt_control" if BOARD_MIMXRT1050_CONTROL
+    default "mimxrt1050_jt_control_a4" if BOARD_REVISION_A4
+
+config FW_CONTROL
+    bool "control firmware"
+    default true
+    help
+    Hints that the Firmware is for control MCU
+
+config EARLY_INIT
+    bool "Enables early init"
+    default true
+    help
+      Used as a guard to enable running of routines that should occur before default Zephyr initialisation.
+      i.e. FlexRAM reconfiguration.
+
+endif # BOARD_MIMXRT1050_CONTROL || BOARD_REVISION_A4

@@ -1,0 +1,5 @@
+config SHIELD_SENSE
+    def_bool $(shields_list_contains,sense)
+
+config SHIELD_SENSE_A3
+    def_bool $(shields_list_contains,sense_a2)
