@@ -1,3 +1,5 @@
+#include <zephyr/arch/arm/cortex_m/scripts/linker.ld>
+
 /** Bootloader expects even sized images. Padding it as below ensures we  always create even binary file size*/
 SECTIONS
 {

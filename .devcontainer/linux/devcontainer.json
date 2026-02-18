@@ -1,0 +1,75 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json
+// This is meant to be run in a WSL distro due to volume mapping
+{
+  "name": "Waitara Dev Tools - Linux (WSL)",
+  "image": "artifact-repo.fphcare.com/cpap-software-docker/waitara-build-tools-linux:2.1.0",
+  "runArgs": [
+    // Allows access to host in dev container via 'host.docker.internal'. Needed for Linux hosts.
+    "--add-host=host.docker.internal:host-gateway",
+    // Puts dev container network within the host network. This avoids need for proxying the connection to FPH
+    // networks as WSL already has internet access by default.
+    "--network=host",
+    // Attach usb device automatically to container: This option seems to allow Waitara device USB to work 
+    // without container restart
+    "--cgroupns=host"
+  ],
+  "privileged": true,
+  "capAdd": ["SYS_PTRACE"],
+  "securityOpt": ["seccomp=unconfined"],
+  "mounts": [
+    {"source": "/mnt", "target": "/mnt", "type": "bind"},
+
+    // For enabling display
+    {"source": "/tmp/.X11-unix", "target": "/tmp/.X11-unix", "type": "bind"},
+
+    {"source": "/home/${env:USER}/.ssh", "target": "/home/user/.ssh", "type": "bind"},
+    {"source": "/home/${env:USER}/.gnupg", "target": "/home/user/.gnupg", "type": "bind"},
+
+    // Attach usb device automatically to container: This option seems to allow JLink to work without 
+    // container restart
+    "source=/dev,target=/dev,type=bind,bind-propagation=rslave"
+  ],
+  "containerEnv": {
+    // These options enable GUI application from WSL docker container
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
+    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+    "PULSE_SERVER": "${localEnv:PULSE_SERVER}"
+  },
+  // Set *default* container specific settings.json values on container create.
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        // Needed to allow automatic install of extension on dev container build.
+        "http.proxyStrictSSL": false
+      },
+      // Installed by default when dev container is (re)built. For extensions needing network access (eg.
+      // GitLab workflow), "http.proxySupport" settings needs to be "off".
+      "extensions": [
+        "charliermarsh.ruff",
+        "cheshirekow.cmake-format",
+        "cschlosser.doxdocgen",
+        "davidanson.vscode-markdownlint",
+        "eamodio.gitlens",
+        "gitlab.gitlab-workflow",
+        "marus25.cortex-debug",
+        "matepek.vscode-catch2-test-adapter",
+        "ms-python.python",
+        "ms-vscode.cpptools",
+        "ms-vscode.hexeditor",
+        "nordic-semiconductor.nrf-devicetree",
+        "nordic-semiconductor.nrf-kconfig",
+        "takumii.markdowntable",
+        "twxs.cmake",
+        "rioj7.command-variable",                // For dynamic lists in task input prompts
+        "alexkrechik.cucumberautocomplete",
+        "streetsidesoftware.code-spell-checker",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml",
+        "trond-snekvik.gnu-mapfiles",
+        "ZixuanWang.linkerscript"
+      ]
+    }
+  } 
+}
